@@ -45,8 +45,13 @@ export const telegramBotMessageHandler = async (msg, match) => {
     if (recivedText === '/get-user-contacts-info') {
         const userContactsData = await ComplimentsRepository.getAllUserContactsInfo()
         const userJSONData = JSON.stringify(userContactsData)
-        return userJSONData
+        return telegramBot.sendMessage(chatId, userJSONData || 'undefined')
     }
+    await telegramBot.sendMessage(chatId, recivedText)
+
+    setInterval(async () => {
+        await telegramBot.sendMessage(chatId, 'Прошло ровно 5000 ms с момента как ты писала мне в последний раз...')
+    })
 
     return telegramBot.sendMessage(chatId, 'Мило, что ты написала, но я тебя не понимаю!)')
 }

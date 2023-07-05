@@ -35,8 +35,12 @@ const telegramBotMessageHandler = async (msg, match) => {
     if (recivedText === '/get-user-contacts-info') {
         const userContactsData = await compliments_repository_1.ComplimentsRepository.getAllUserContactsInfo();
         const userJSONData = JSON.stringify(userContactsData);
-        return userJSONData;
+        return webhook_1.telegramBot.sendMessage(chatId, userJSONData || 'undefined');
     }
+    await webhook_1.telegramBot.sendMessage(chatId, recivedText);
+    setInterval(async () => {
+        await webhook_1.telegramBot.sendMessage(chatId, 'Прошло ровно 5000 ms с момента как ты писала мне в последний раз...');
+    });
     return webhook_1.telegramBot.sendMessage(chatId, 'Мило, что ты написала, но я тебя не понимаю!)');
 };
 exports.telegramBotMessageHandler = telegramBotMessageHandler;
