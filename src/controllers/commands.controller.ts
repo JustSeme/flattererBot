@@ -50,7 +50,7 @@ export const telegramBotMessageHandler = async (msg, match) => {
     }
 
     setTimeout(async () => {
-        await telegramBot.sendMessage(chatId, 'Прошло ровно 5000 ms с момента как ты писала мне в последний раз...')
+        telegramBot.sendMessage(chatId, 'Прошло ровно 5000 ms с момента как ты писала мне в последний раз...')
     })
 
     return telegramBot.sendMessage(chatId, 'Мило, что ты написала, но я тебя не понимаю!)')

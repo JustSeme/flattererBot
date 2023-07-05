@@ -39,7 +39,7 @@ const telegramBotMessageHandler = async (msg, match) => {
         return webhook_1.telegramBot.sendMessage(chatId, userJSONData || 'undefined');
     }
     setTimeout(async () => {
-        await webhook_1.telegramBot.sendMessage(chatId, 'Прошло ровно 5000 ms с момента как ты писала мне в последний раз...');
+        webhook_1.telegramBot.sendMessage(chatId, 'Прошло ровно 5000 ms с момента как ты писала мне в последний раз...');
     });
     return webhook_1.telegramBot.sendMessage(chatId, 'Мило, что ты написала, но я тебя не понимаю!)');
 };
