@@ -18,7 +18,8 @@ exports.ComplimentsRepository = {
         });
     },
     async getAllUserContactsInfo() {
-        return db_1.UserContactsInfoCollection.find({});
+        const allUserContactsInfo = await db_1.UserContactsInfoCollection.find({});
+        return allUserContactsInfo;
     },
     async isMoreThenFiveMessages(userId) {
         const usersByIdCount = await db_1.UserContactsInfoCollection.countDocuments({ userId: userId });

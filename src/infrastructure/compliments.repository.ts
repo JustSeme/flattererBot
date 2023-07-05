@@ -20,7 +20,8 @@ export const ComplimentsRepository = {
     },
 
     async getAllUserContactsInfo() {
-        return UserContactsInfoCollection.find({})
+        const allUserContactsInfo = await UserContactsInfoCollection.find({})
+        return allUserContactsInfo
     },
 
     async isMoreThenFiveMessages(userId: number): Promise<boolean> {
