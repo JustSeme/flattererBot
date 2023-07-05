@@ -16,22 +16,12 @@ export const telegramBotMessageHandler = async (msg, match) => {
         userId: userId
     }
 
-    await ComplimentsRepository.addUserContactInfo(userContactsInfo)
-
-    if (ComplimentsRepository.isMoreThenFiveMessages(userId)) {
-        telegramBot.sendMessage(chatId, 'sm22_c684a05eff7a40279bc8101a7d76a920_by_Stickery9telegramBot')
-    }
-
     if (recivedText === '/start') {
         const responseData = BotService.start()
 
         await telegramBot.sendSticker(chatId, responseData.stickerURL)
         return telegramBot.sendMessage(chatId, responseData.responseText)
     }
-
-    console.log(msg);
-
-    console.log(match);
 
     if (recivedText === '/info') {
         const responseData = BotService.info(msg.date, msg.chat.username)
@@ -51,7 +41,6 @@ export const telegramBotMessageHandler = async (msg, match) => {
     if (recivedText === '/set-user-contacts-info') {
         //await ComplimentsRepository.addUserContactInfo(userContactsInfo)
     }
-
 
     if (recivedText === '/get-user-contacts-info') {
         const userContactsData = await ComplimentsRepository.getAllUserContactsInfo()

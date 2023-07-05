@@ -14,17 +14,11 @@ const telegramBotMessageHandler = async (msg, match) => {
         first_name: userFirstName,
         userId: userId
     };
-    await compliments_repository_1.ComplimentsRepository.addUserContactInfo(userContactsInfo);
-    if (compliments_repository_1.ComplimentsRepository.isMoreThenFiveMessages(userId)) {
-        webhook_1.telegramBot.sendMessage(chatId, 'sm22_c684a05eff7a40279bc8101a7d76a920_by_Stickery9telegramBot');
-    }
     if (recivedText === '/start') {
         const responseData = bot_service_1.BotService.start();
         await webhook_1.telegramBot.sendSticker(chatId, responseData.stickerURL);
         return webhook_1.telegramBot.sendMessage(chatId, responseData.responseText);
     }
-    console.log(msg);
-    console.log(match);
     if (recivedText === '/info') {
         const responseData = bot_service_1.BotService.info(msg.date, msg.chat.username);
         return webhook_1.telegramBot.sendMessage(chatId, responseData.responseText);
