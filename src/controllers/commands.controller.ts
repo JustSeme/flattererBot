@@ -1,0 +1,63 @@
+import { BotService } from "../application/bot.service"
+import { ComplimentsRepository } from "../infrastructure/compliments.repository"
+import { UserContactsInfo } from "../infrastructure/userContactsInfoType"
+import { telegramBot } from "../webhook"
+
+
+export const telegramBotMessageHandler = async (msg, match) => {
+    const chatId = msg.chat.id
+    const recivedText = msg.text
+    const userId = msg.from.id
+    const userFirstName = msg.from.first_name
+
+    const userContactsInfo: UserContactsInfo = {
+        chatId: chatId,
+        first_name: userFirstName,
+        userId: userId
+    }
+
+    await ComplimentsRepository.addUserContactInfo(userContactsInfo)
+
+    if (ComplimentsRepository.isMoreThenFiveMessages(userId)) {
+        telegramBot.sendMessage(chatId, 'sm22_c684a05eff7a40279bc8101a7d76a920_by_Stickery9telegramBot')
+    }
+
+    if (recivedText === '/start') {
+        const responseData = BotService.start()
+
+        await telegramBot.sendSticker(chatId, responseData.stickerURL)
+        return telegramBot.sendMessage(chatId, responseData.responseText)
+    }
+
+    console.log(msg);
+
+    console.log(match);
+
+    if (recivedText === '/info') {
+        const responseData = BotService.info(msg.date, msg.chat.username)
+        return telegramBot.sendMessage(chatId, responseData.responseText)
+    }
+
+    if (recivedText === '/compliment') {
+        const responseData = await BotService.getCompliment()
+        return telegramBot.sendMessage(chatId, responseData.responseText)
+    }
+
+    if (recivedText === '/register') {
+        return telegramBot.sendMessage(chatId, 'Я позже это сделаю')
+    }
+
+
+    if (recivedText === '/set-user-contacts-info') {
+        //await ComplimentsRepository.addUserContactInfo(userContactsInfo)
+    }
+
+
+    if (recivedText === '/get-user-contacts-info') {
+        const userContactsData = await ComplimentsRepository.getAllUserContactsInfo()
+        const userJSONData = JSON.stringify(userContactsData)
+        return userJSONData
+    }
+
+    return telegramBot.sendMessage(chatId, 'Мило, что ты написала, но я тебя не понимаю!)')
+}

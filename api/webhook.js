@@ -26,15 +26,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.telegramBot = void 0;
 const dotenv = __importStar(require("dotenv"));
 const TelegramBot = require("node-telegram-bot-api");
+const commands_controller_1 = require("./controllers/commands.controller");
 dotenv.config();
 exports.telegramBot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN);
 module.exports = async (request, response) => {
     try {
+        exports.telegramBot.setMyCommands([
+            { command: '/start', description: 'Приветствие' },
+            { command: '/info', description: 'Получить информацию' },
+            { command: '/compliment', description: 'Получить случайный комплиент' },
+            { command: '/register', description: 'Подписаться на рассылку комплиментов' },
+        ]);
         const { body } = request;
         if (body.message) {
-            const { chat: { id }, text } = body.message;
-            const message = `Hello Tsc`;
-            await exports.telegramBot.sendMessage(id, message, { parse_mode: 'Markdown' });
+            await (0, commands_controller_1.telegramBotMessageHandler)(body.message, body.match);
         }
     }
     catch (error) {
