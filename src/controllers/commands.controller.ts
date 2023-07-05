@@ -48,7 +48,6 @@ export const telegramBotMessageHandler = async (msg, match) => {
         const userJSONData = JSON.stringify(userContactsData)
         return telegramBot.sendMessage(chatId, userJSONData || 'undefined')
     }
-    await telegramBot.sendMessage(chatId, recivedText)
 
     setTimeout(async () => {
         await telegramBot.sendMessage(chatId, 'Прошло ровно 5000 ms с момента как ты писала мне в последний раз...')
