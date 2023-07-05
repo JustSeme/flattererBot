@@ -1,0 +1,22 @@
+{
+  "name": "flattererBot",
+  "version": "1.0.0",
+  "main": "main.ts",
+  "author": "justSeme",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "mongodb": "^5.6.0",
+    "node-telegram-bot-api": "^0.61.0",
+    "nodemon": "^2.0.22"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "develop": "nodemon ./api/webhook.js",
+    "start": "node ./api/webhook.js"
+  },
+  "devDependencies": {
+    "@types/node-telegram-bot-api": "^0.61.6",
+    "typescript": "^5.1.3"
+  }
+}
